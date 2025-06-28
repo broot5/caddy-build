@@ -5,6 +5,7 @@ on:
     branches: ["main"]
   schedule:
     - cron: "15 3 * * 2,5" # 매주 화요일, 금요일 오전 3시 15분 (UTC)
+  workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
@@ -38,7 +39,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=latest
-            type=schedule,pattern={{date 'YYYYMMDD-HHmmss'}}
+            type=raw,value={{date 'YYYYMMDD-HHmmss'}}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
